@@ -117,6 +117,7 @@ function updateDom(Collection) {
 	//Handlers for editing data values
 	x = document.querySelectorAll("tr");
 	for (i = 1; i < x.length; i++) {
+		x[i].children[1].addEventListener("dblclick", () => chrome.tts.speak(event.target.innerText, { 'voiceName': 'Google US English' }));
 		x[i].children[2].addEventListener("dblclick", () => UpdateWord(event, 2));
 		x[i].children[3].addEventListener("dblclick", () => UpdateWord(event, 3));
 	}
@@ -183,13 +184,19 @@ function save() {
 	let t = document.getElementById("t");
 
 	if (LOCATION == 'database') {
-
+		if (w.value == '') return;
 		let abc = "Word=" + w.value + "&Definition=" + d.value + "&Translation=" + t.value;
 		send(abc);
-		flash("Congratulations! " + abc.Word + " is saved.");
+		flash('Congratulations! "' + w.value + '" is saved.');
+		w.placeholder = ' "' + w.value + '" Saved';
+		w.value = "";
+		d.placeholder = d.value ? ' "' + d.value + '" Saved' : "";
+		d.value = "";
+		t.placeholder = t.value ? ' "' + t.value + '" Saved' : "";
+		t.value = "";
 
 	} else {
-
+		if (w.value == '') return;
 		chrome.storage.sync.get({ 'Words': [] }, (data) => {
 			let obj = data.Words;
 			let time = new Date().toISOString().slice(0, 10) + " " + new Date().toISOString().slice(11, 19);
@@ -197,11 +204,12 @@ function save() {
 			chrome.storage.sync.set({
 				'Words': obj
 			}, () => {
-				w.placeholder = w.value + "Saved";
+				flash('Congratulations! "' + w.value + '" is saved.');
+				w.placeholder = ' "' + w.value + '" Saved';
 				w.value = "";
-				d.placeholder = d.value ? + d.value + "Saved" : "";
+				d.placeholder = d.value ? ' "' + d.value + '" Saved' : "";
 				d.value = "";
-				t.placeholder = t.value ? + t.value + "Saved" : "";
+				t.placeholder = t.value ? ' "' + t.value + '" Saved' : "";
 				t.value = "";
 			});
 		});
@@ -235,6 +243,7 @@ document.getElementById("Add").onclick = () => {
 		return false;
 	} else {
 		let tr = document.createElement("tr");
+		let time = new Date().toISOString().slice(0, 10) + " " + new Date().toISOString().slice(11, 19);
 		tr.setAttribute("id", "Save");
 		let x = `<td scope="row"> 00 </td>
 
@@ -243,8 +252,8 @@ document.getElementById("Add").onclick = () => {
 			<td class="Defination" > <input class="form-control" placeholder="Definition" id="d" /> </td>
 
 			<td class="Translation"> <input class="form-control" placeholder="Translation" id="t" /> </td>
-
-			<td> 00:00:00 </td>`;
+			
+			<th scope="col" class="text-center">` + time + '</th>';
 
 		tr.innerHTML = x;
 		WORD.appendChild(tr);
@@ -257,7 +266,5 @@ function flash(data) {
 	var node = document.getElementById("snackbar");
 	node.innerHTML = data;
 	node.className = "show";
-	setTimeout(() => {
-		node.className = node.className.replace("show", "");
-	}, 3000);
+	setTimeout(() => { node.className = node.className.replace("show", "") }, 3000);
 }

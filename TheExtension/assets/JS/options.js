@@ -22,28 +22,28 @@ OnDatabase.onclick = function (e) {
 
 Save.onclick = function (e) {
         e.preventDefault();
-        if (OnDatabase.checked) {
 
-                let uri = DBuri.value;
+        let uri = DBuri.value;
 
-                if (uri == '') {
-                        flash("Please insert the database url correcectly", false);
-                        return false;
-                } else {
-                        //fix uri,prepend http:// if unless http:// or https://
-                        uri = (uri.indexOf('://') === -1) ? 'http://' + uri : uri;
-
-                        //say what! Yes, could be more readable, but you know
-                        chrome.storage.sync.set({
-                                'storage': uri ? 'database' : 'cache',
-                                'db': uri ? uri : '',
-                                'sound': Sound.checked ? 'on' : 'off'
-                        }, () =>
-                                uri ? flash('Database address set to "' + uri + '"') : flash("success")
-                        );
-                }
-
+        if (OnDatabase.checked && uri == '') {
+                flash("Please insert the database url correcectly", false);
+                return false;
         }
+        else if (OnDatabase.checked) {
+                //fix uri,prepend http:// if unless http:// or https://
+                uri = (uri.indexOf('://') === -1) ? 'http://' + uri : uri;
+        }
+
+        //say what! Yes, could be more readable, but you know
+        chrome.storage.sync.set({
+                'storage': OnDatabase.checked ? 'database' : 'cache',
+                'db': uri ? uri : '',
+                'sound': Sound.checked ? 'on' : 'off'
+        }, () =>
+                OnDatabase.checked ? flash('Database address set to "' + uri + '"') : flash("success")
+        );
+
+
 }
 
 Reset.onclick = function (e) {
@@ -109,7 +109,7 @@ CrlHistory.onclick = function (e) {
                         OnCache.checked = false;
                         OnDatabase.checked = true;
                         DBuri.disabled = false;
-                        DBuri.value = uri.db;
+                        DBuri.value = data.db;
                 }
                 else {
                         OnCache.checked = true;
