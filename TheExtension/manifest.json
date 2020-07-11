@@ -1,0 +1,26 @@
+{
+	"manifest_version": 2,
+
+	"name": "Vocabulary",
+	"description": "Save words on the go!",
+	"version": "1.0",
+	"icons": {
+		"128": "yabulary128.png",
+		"48": "yabulary48.png",
+		"16": "yabulary16.png"
+	},
+
+	"browser_action": {
+		"default_popup": "popup.html",
+		"default_title": "Save Word"
+	},
+
+	"background": {
+		"scripts": ["eventPage.js"],
+		"persistent": false
+	},
+
+	"options_page": "options.html",
+
+	"permissions": ["tabs","tts", "contextMenus", "http://localhost/*", "http://vocabulary.loc/*", "storage"]
+}
