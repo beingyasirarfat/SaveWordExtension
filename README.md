@@ -1,7 +1,7 @@
 # SaveWordExtension
 SaveWordsOnTheGo
 ## Installation
-To use unpacked you need to enable developer mode. Just go to:
+To use any unpacked extension, you need to enable developer mode. Just go to:
 ```
 customize and control> More Tools> Extensions > Developer mode > Turn on
 ```
