@@ -117,10 +117,14 @@ function updateDom(Collection) {
 	//Handlers for editing data values
 	x = document.querySelectorAll("tr");
 	for (i = 1; i < x.length; i++) {
-		x[i].children[1].addEventListener("dblclick", () => chrome.tts.speak(event.target.innerText, { 'voiceName': 'Google US English' }));
+		x[i].children[1].addEventListener("dblclick", () => ReadAloud(event.target.innerText));
 		x[i].children[2].addEventListener("dblclick", () => UpdateWord(event, 2));
 		x[i].children[3].addEventListener("dblclick", () => UpdateWord(event, 3));
 	}
+}
+
+function ReadAloud(data) {
+	chrome.tts.speak(data, { 'voiceName': 'Google US English' });
 }
 
 function UpdateWord(event, child) {
