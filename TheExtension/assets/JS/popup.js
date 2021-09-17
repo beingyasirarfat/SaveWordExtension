@@ -1,8 +1,12 @@
 let Save = document.getElementById("Save");
 let Input = document.getElementById("Word");
 let View = document.getElementById("ViewWords");
+let Invert = document.getElementById("Invert");
 
 
+Invert.onclick = function(){
+    chrome.tabs.executeScript(null, { code: 'document.querySelectorAll("html").forEach(a=>a.style.filter = "invert(1)")' }, function() {});
+}
 Save.onclick = function () {
 
 	var WORD = document.getElementById("Word").value;
