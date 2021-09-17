@@ -22,5 +22,5 @@
 
 	"options_page": "options.html",
 
-	"permissions": ["tabs","tts", "contextMenus", "http://localhost/*", "http://vocabulary.loc/*", "storage"]
+	"permissions": ["tabs","tts", "contextMenus", "<all_urls>", "storage"]
 }
