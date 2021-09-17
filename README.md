@@ -12,8 +12,8 @@ Extensions> Load Unpacked > [Select Unarchived TheExtension folder]
 ```
 To use database :
 ```
-Paste The Vocabulary folder on root directory  of your localhost,
-Update the credentials, on the options page.
+Paste The Vocabulary folder on root directory  of your localhost, add the path in the extension's options page
+Update the credentials[database user/password].
 or customize the settings properly as your needs fits.
 `````
 
