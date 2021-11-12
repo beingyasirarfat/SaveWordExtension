@@ -5,7 +5,14 @@ let Invert = document.getElementById("Invert");
 
 
 Invert.onclick = function(){
-    chrome.tabs.executeScript(null, { code: 'document.querySelectorAll("html").forEach(a=>a.style.filter = "invert(1)")' }, function() {});
+	var intensity = 1;
+	var no = Number(Input.value);
+	if(Number.isInteger(no)){
+		if(no>0 && no <100){
+			intensity = no/100;
+		}
+	}
+    	chrome.tabs.executeScript(null, { code: `document.querySelectorAll("html").forEach(a=>a.style.filter = "invert(${intensity})")` }, function() {});
 }
 Save.onclick = function () {
 
